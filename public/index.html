@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr" translate="no">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Perlin Noise - Valentin Gorrin</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://kit.fontawesome.com/c2ff5c5615.css" crossorigin="anonymous">
+	</head>
+	<body>
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<div id="scene"></div>
+		<div id="controls">
+			<div class="input range">
+				<label for="controls-width">
+					<i class="fa-sharp fa-solid fa-arrows-left-right"></i>
+					<span id="controls-width-value" class="value"></span>
+				</label>
+				<input target="width" id="controls-width" type="range">
+			</div>
+			<div class="input range">
+				<label for="controls-height">
+					<i class="fa-sharp fa-solid fa-arrows-up-down"></i>
+					<span id="controls-height-value" class="value"></span>
+				</label>
+				<input target="height" id="controls-height" type="range">
+			</div>
+			<div class="input range">
+				<label for="controls-coeff">
+					<i class="fa-sharp fa-solid fa-arrows-up-to-line"></i>
+					<span id="controls-coeff-value" class="value"></span>
+				</label>
+				<input target="coeff" id="controls-coeff" type="range">
+			</div>
+			<div class="input color">
+				<label for="controls-color">
+					<i class="fa-sharp fa-solid fa-paint-roller"></i>
+				</label>
+				<input target="color" id="controls-color" type="color">
+			</div>
+			<footer>
+				<button id="controls-refresh" type="button">
+					<i class="fa-sharp fa-solid fa-rotate-right"></i>
+					Refresh
+				</button>
+				<div class="input checkbox">
+					<input target="auto_refresh" checked id="controls-auto_refresh" type="checkbox">
+					<label for="controls-auto_refresh">auto refresh</label>
+				</div>
+			</footer>
+		</div>
+		<script src="https://kit.fontawesome.com/c2ff5c5615.js" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+		<script defer type="text/javascript" src="./app.bundle.js"></script>
+	</body>
+</html>
