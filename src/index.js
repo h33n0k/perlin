@@ -27,16 +27,31 @@ import perlin from "./perlin.js";
 const p2d = n => n * (((Math.PI / 2) / 9) / 10);
 const d2p = n => n / (((Math.PI / 2) / 9) / 10);
 const wait = time => new Promise(resolve => setTimeout(resolve, time));
+const boxSize = mesh => new THREE.Box3().setFromObject(mesh).getSize(new THREE.Vector3());
+const hex2rgba = hexa => {
+	let r = parseInt(hexa.slice(1,3), 16);
+	let g = parseInt(hexa.slice(3,5), 16);
+	let b = parseInt(hexa.slice(5,7), 16);
+	let a = parseInt(hexa.slice(7,9), 16)/255;
+	return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
 
 const sceneParameters = {
 	container: document.querySelector("#scene"),
+	// imageContainer: document.querySelector("#graph-image"),
+	// get imageContext() {
+	// 	return this.imageContainer.getContext("2d");
+	// },
 	get width() {
-		return this.container.offsetWidth
+		return this.container.offsetWidth;
 	},
 	get height() {
-		return this.container.offsetHeight
+		return this.container.offsetHeight;
 	}
 };
+
+// sceneParameters.imageContainer.width = sceneParameters.imageContainer.innerWidth;
+// sceneParameters.imageContainer.height = sceneParameters.imageContainer.innerHeight;
 
 const ENTIRE_SCENE = 0
 const BLOOM_SCENE = 1;
@@ -102,95 +117,284 @@ const setSize = () => {
 setSize();
 window.onresize = setSize;
 
-// (async () => {
-
-// 	const light = new THREE.AmbientLight( 0x404040 ); // soft white light
-// 	scene.add( light );
-
-// 	const geometry = new THREE.BoxGeometry(2, 2, 2);
-// 	const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-// 	const cube = new THREE.Mesh(geometry, material);
-// 	cube.position.set(0, 2, 0);
-// 	// scene.add(cube);
-
-// })();
-
 camera.position.set(0, 50, -110);
 const intersectsGroup = new THREE.Group();
+scene.add(intersectsGroup);
 
 const area = new THREE.Vector2(100, 100);
+
+// (() => {
+// 	const geometry = new THREE.PlaneGeometry(area.x, area.y);
+// 	const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+// 	const plane = new THREE.Mesh(geometry, material);
+// 	plane.rotation.x = p2d(90);
+// 	scene.add(plane);
+// })();
+
 let autoRefresh = true;
-let lineColor = "#555555";
+let lineColor = "#ff0000";
 let [width, height] = [20, 20];
-let coeff = 6;
+let coeff = 5;
 
-const setGraph = () => {
+const transition = .8;
+
+let pointsArray = new Array();
+let [prevWidth, prevHeight] = [width, height];
+const setGraphs = async () => {
+
+	const updatePositions = geo => geo.attributes.position.needsUpdate = true;
+	const findY = (x, z) => {
+		for(let i = 0; i < pointsArray.length; i++) {
+			for(let j = 0; j < pointsArray[i].length; j++) {
+				if(pointsArray[i][j].x === x && pointsArray[i][j].z === z) return pointsArray[i][j].y;
+			};
+		};
+		return 0;
+	};
+
+	const getDivisions = (i, j) => {
+		return {
+			x: Math.floor(-(area.x / 2) + (area.x / (width)) * i),
+			z: Math.floor(-(area.y / 2) + (area.y / (height)) * j)
+		}
+	};
+
+	const findClosest = (axe, value) => {
+		const r = array => array.map(p => p[axe]);
+		const positions = new Array(width)
+			.fill()
+			.map((e, i) => new Array(height)
+				.fill()
+				.map((f, j) => getDivisions(i, j)))
+			.reduce((current, accumulator) => {
+				if(typeof current[0] !== "number") current = r(current);
+				current = [...current, ...r(accumulator)];
+				return current;
+			});
+
+		let distanceMin = Infinity;
+		let indexMin = 0;
+		for(let i = 0; i < positions.length; i++) {
+			const distance = Math.abs(positions[i] - value);
+			if(distance < distanceMin) {
+				distanceMin = distance;
+				indexMin = i;
+			}
+		}
+		return positions[indexMin];
+	};
+
+	await new Promise(r => {
+		Promise.all(intersectsGroup.children.map(child => new Promise(resolve => {
+			switch(child.type) {
+				case "Mesh":
+					const position = {...child.position};
+					gsap.to(position, {
+						x: child.position.x,
+						y: 0,
+						z: child.position.z,
+						duration: (transition / 2),
+						onUpdate: () => child.position.setY(position.y),
+						onComplete: () => resolve()
+					});
+					break;
+				case "Line":
+					const endArray = child.geometry.attributes.position.array.map((position, i) => (i % 3) === 1 ? 0 : position);
+
+					gsap.to(child.geometry.attributes.position.array, {
+						duration: (transition / 2),
+						onUpdate: () => updatePositions(child.geometry),
+						endArray,
+						onComplete: () => resolve()
+					});
+					break;
+				default:
+					resolve();
+					break;
+			};
+		}))).then(r);
+	});
+
+	if(prevWidth !== width || prevHeight !== height) {
+		await new Promise(r => {
+			Promise.all(intersectsGroup.children.map(child => new Promise(r2 => {
+				switch(child.type) {
+					case "Mesh":
+						const position = {...child.position};
+						gsap.to(position, {
+							x: findClosest("x", child.position.x),
+							y: child.position.y,
+							z: findClosest("z", child.position.z),
+							duration: (transition / 2),
+							onUpdate: () => {
+								child.position.setX(position.x);
+								child.position.setZ(position.z);
+							},
+							onComplete: () => r2()
+						});
+						break;
+					case "Line":
+						const endArray = child.geometry.attributes.position.array.map((position, i) => {
+							switch(i % 3) {
+								case 0:
+									return findClosest("x", position)
+									break;
+								case 2:
+									return findClosest("z", position)
+									break;
+								default:
+									return position;
+									break;
+							};
+						});
+
+						gsap.to(child.geometry.attributes.position.array, {
+							duration: (transition / 2),
+							onUpdate: () => updatePositions(child.geometry),
+							endArray,
+							onComplete: () => r2()
+						});
+						break;
+					default:
+						r2();
+						break;
+				};
+			}))).then(r);
+		});
+	};
+
 	intersectsGroup.remove(...intersectsGroup.children);
-	let points = new Array();
-	perlin(width, height).forEach((section, i) => {
-		const sectionPoints = new Array();
-		const divX = (-(area.x / 2) + (area.x / (width)) * i);
+	// sceneParameters.imageContext.clearRect(0, 0, sceneParameters.imageContainer.offsetWidth, sceneParameters.imageContainer.offsetHeight);
+	pointsArray = new Array();
+
+	perlin(width, height).forEach((section, i) => {		
+
+		const points = new Array();
+		
 		section.forEach((value, j) => {
-			const divZ = (-(area.y / 2) + (area.y / (height)) * j);
-			sectionPoints.push(new THREE.Vector3(divX, (value * coeff), divZ));
+			// // 2d graph
+			// sceneParameters.imageContext.fillStyle = (j % 2) === 0 ? hex2rgba(lineColor + Math.floor(value * 100)) : "red";
+			// sceneParameters.imageContext.fillRect(
+			// 	((sceneParameters.imageContainer.offsetWidth / width) * i),
+			// 	((sceneParameters.imageContainer.offsetHeight / height) * j),
+			// 	sceneParameters.imageContainer.offsetWidth / width,
+			// 	sceneParameters.imageContainer.offsetHeight / height
+			// );
+
+			// 3d graph
+			const divisions = getDivisions(i, j);
+			points.push(new THREE.Vector3(divisions.x, (value * coeff), divisions.z));
 		});
-
-		const geometry = new THREE.BufferGeometry().setFromPoints(sectionPoints);
-
+		
+		const geometry = new THREE.BufferGeometry().setFromPoints(points.map(p => {
+			return {
+				...p,
+				y: 0
+			}
+		}));
 		const material = new THREE.LineBasicMaterial({ color: new THREE.Color(lineColor) });
 		const line = new THREE.Line(geometry, material);
 		intersectsGroup.add(line);
-		points.push(sectionPoints);
+		pointsArray.push(points);
 
-		const positions = geometry.attributes.position.array;
-
-		const updatePositions = () => {
-			geometry.attributes.position.needsUpdate = true;
-		}
-
-		gsap.to(positions, {
-			duration: .6, // durée de l'animation
-			delay: 0, // délai avant le début de l'animation
-			repeat: 1, // nombre de fois que l'animation doit se répéter (-1 pour une répétition infinie)
-			yoyo: true, // l'animation doit-elle être en mode yoyo ?
-			onUpdate: updatePositions, // fonction de mise à jour des positions des points à chaque image de l'animation
-			// startArray: positions.map(() => 0),
-			endArray: new THREE.BufferGeometry().setFromPoints(sectionPoints.map(vector => new THREE.Vector3(vector.x, 0, vector.z))).attributes.position.array,
+		points.forEach(position => {
+			const geometry = new THREE.SphereGeometry(.5, 32, 16);
+			const material = new THREE.MeshBasicMaterial( { color: new THREE.Color(lineColor) } );
+			const sphere = new THREE.Mesh(geometry, material);
+			sphere.position.copy({...position, y: 0});
+			intersectsGroup.add(sphere);
 		});
 
 	});
-	const crossPoints = new Array();
-	for(let i = 0; i < height; i++) {
+
+	new Array(height).fill().map((e, i) => {
 		const array = new Array();
-		for(let j = 0; j < points.length; j++) array.push(points[j][i]);
-		crossPoints.push(array);
-	}
-	crossPoints.forEach(sectionPoints => {
-		const geometry = new THREE.BufferGeometry().setFromPoints(sectionPoints);
+		for(let j = 0; j < pointsArray.length; j++) array.push(pointsArray[j][i]);
+		return array;
+	}).forEach(section => {
+		const geometry = new THREE.BufferGeometry().setFromPoints(section.map(p => {
+			return {
+				...p,
+				y: 0
+			}
+		}));
 		const material = new THREE.LineBasicMaterial({ color: new THREE.Color(lineColor) });
 		const line = new THREE.Line(geometry, material);
 		intersectsGroup.add(line);
-
-		const positions = geometry.attributes.position.array;
-
-		const updatePositions = () => {
-			geometry.attributes.position.needsUpdate = true;
-		}
-
-		gsap.to(positions, {
-			duration: .6, // durée de l'animation
-			delay: 0, // délai avant le début de l'animation
-			repeat: 1, // nombre de fois que l'animation doit se répéter (-1 pour une répétition infinie)
-			yoyo: true, // l'animation doit-elle être en mode yoyo ?
-			onUpdate: updatePositions, // fonction de mise à jour des positions des points à chaque image de l'animation
-			// startArray: positions.map(() => 0),
-			endArray: new THREE.BufferGeometry().setFromPoints(sectionPoints.map(vector => new THREE.Vector3(vector.x, 0, vector.z))).attributes.position.array,
-		});
 	});
-	scene.add(intersectsGroup);
+
+	if(prevWidth !== width || prevHeight !== height) {
+		await wait(100);
+		await new Promise((resolve, reject) => {
+			const position = {...intersectsGroup.position};
+			gsap.to(position, {
+				x: (area.x - boxSize(intersectsGroup).x) / 2,
+				y: intersectsGroup.position.y,
+				z: (area.y - boxSize(intersectsGroup).z) / 2,
+				duration: (transition / 2),
+				onUpdate: () => {
+					intersectsGroup.position.setX(position.x);
+					intersectsGroup.position.setZ(position.z);
+				},
+				onComplete: () => resolve()
+			});
+		});
+
+	};
+
+	await wait(100);
+
+	await new Promise(r => {
+		Promise.all(intersectsGroup.children.map(child => new Promise(resolve => {
+			switch(child.type) {
+				case "Mesh":
+					const position = {...child.position, y: 0};
+					gsap.to(position, {
+						x: child.position.x,
+						y: findY(child.position.x, child.position.z),
+						z: child.position.z,
+						duration: (transition / 2),
+						onUpdate: () => child.position.setY(position.y),
+						onComplete: () => resolve()
+					});
+					break;
+				case "Line":
+
+					const positionArray = [...child.geometry.attributes.position.array];
+					const endArray = positionArray.map((value, i) => {
+						if((i % 3) === 1) {
+							return findY(positionArray[i - 1], positionArray[i + 1]);
+						}
+						return value;
+					});
+
+					gsap.to(child.geometry.attributes.position.array, {
+						duration: (transition / 2),
+						onUpdate: () => updatePositions(child.geometry),
+						endArray: endArray,
+					});
+					resolve();
+					break;
+				default:
+					resolve();
+					break;
+			};
+		}))).then(r);
+	});
+
+	[prevWidth, prevHeight] = [width, height];
 };
 
-setGraph();
+setGraphs(true);
+
+// (async () => {
+// 	width = 10;
+// 	await setGraphs();
+// 	width = 5;
+// 	await setGraphs();
+// 	// width = 30;
+// 	// await setGraphs();
+// })();
 
 const refreshValues = () => $("#controls span.value").each(function() {
 	$(this).text($(this).parent().parent().find("input").val());
@@ -218,12 +422,12 @@ $("#controls input").each(function() {
 
 refreshValues();
 
-$("#controls-width").change(function(event) {
+$("body").on("change mousemove", "#controls-width",function(event) {
 	width = parseInt($(this).val());
 	refreshValues();
 });
 
-$("#controls-height").change(function(event) {
+$("body").on("change mousemove", "#controls-height",function(event) {
 	height = parseInt($(this).val());
 	refreshValues();
 });
@@ -232,7 +436,7 @@ $("#controls-color").change(function(event) {
 	lineColor = new THREE.Color($(this).val());
 });
 
-$("#controls-coeff").change(function(event) {
+$("body").on("change mousemove", "#controls-coeff",function(event) {
 	coeff = parseInt($(this).val());
 	refreshValues();
 });
@@ -243,16 +447,16 @@ $("#controls-auto_refresh").change(function(event) {
 
 $("#controls input").change(function(event) {
 	$(`${$(this).attr("id")}-value`).text($(this).val());
-	if(autoRefresh) setGraph();
+	if(autoRefresh) setGraphs();
 });
 
-$("#controls-refresh").click(setGraph);
+$("#controls-refresh").click(setGraphs);
 
 //dev----------------
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enablePan = false;
+// controls.enablePan = false;
 controls.enableZoom = false;
-controls.autoRotateSpeed = 0.25;
+controls.autoRotateSpeed = 0.3;
 controls.autoRotate = true;
 //-------------------
 
@@ -264,15 +468,19 @@ const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
 window.addEventListener("mousemove", event => {
-	// if(raycasterTarget) sceneParameters.container.style.cursor = "pointer";
-	// else sceneParameters.container.style.cursor = "auto";
 	pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
 	pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
-});
-
-window.addEventListener("click", event => {
-	if(!raycasterTarget) return;
-	console.log(raycasterTarget.position.y / 10);
+	$("#raycaster").css({
+		top: event.clientY + "px",
+		left: event.clientX + "px"
+	});
+	if(raycasterTarget) {
+		$("#raycaster").show().text(raycasterTarget.position.y);
+		controls.autoRotate = false;
+	} else {
+		$("#raycaster").hide();
+		controls.autoRotate = true;
+	}
 });
 
 (function animate() {
@@ -297,9 +505,7 @@ window.addEventListener("click", event => {
 	const intersects = raycaster.intersectObjects(intersectsGroup.children);
 	if(intersects.length > 0) {
 		const target = intersects[0].object;
-		// const target = intersects[0].object.name;
-		// console.log(target)
-		if(target) raycasterTarget = target;
+		if(target && target.type === "Mesh") raycasterTarget = target;
 		else raycasterTarget = null;
 	}
 

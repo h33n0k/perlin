@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n  box-sizing: border-box;\n  align-items: center;\n}\n\nbody {\n  position: relative;\n  padding: 0;\n  margin: 0;\n  width: 100vw;\n  min-height: 100vh;\n  font-family: \"Roboto\", sans-serif;\n  color: white;\n}\nbody #scene {\n  width: 100vw;\n  height: 100vh;\n}\nbody #controls {\n  border-radius: 5px;\n  position: fixed;\n  bottom: 1em;\n  left: 1em;\n  background-color: #222;\n  padding: 1em;\n  min-width: 30vw;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  align-items: start;\n}\nbody #controls > .input {\n  width: 100%;\n  display: grid;\n  grid-template-columns: 50px 1fr;\n  grid-gap: 5px;\n}\nbody #controls > .input > label {\n  width: 100%;\n  display: grid;\n  justify-content: center;\n  grid-gap: 10px;\n  grid-template-columns: 20px 1fr;\n}\nbody #controls > .input > label i {\n  justify-self: center;\n}\nbody #controls > .input input {\n  width: 100%;\n  padding: 0;\n  border: none;\n  background-color: transparent;\n  cursor: pointer;\n}\nbody #controls > footer {\n  margin-top: 1em;\n  display: flex;\n  gap: 10px;\n}\nbody #controls > footer > button {\n  padding: 0.75em;\n  background-color: #306ffc;\n  color: white;\n  font-weight: bold;\n  border: none;\n  cursor: pointer;\n}\nbody #controls > footer .input {\n  display: flex;\n  gap: 5px;\n}\nbody #controls > footer .input label {\n  cursor: pointer;\n}", "",{"version":3,"sources":["webpack://./src/style/style.scss"],"names":[],"mappings":"AAAA;EACI,sBAAA;EACA,mBAAA;AACJ;;AAEA;EACI,kBAAA;EACA,UAAA;EACA,SAAA;EACA,YAAA;EACA,iBAAA;EACA,iCAAA;EACA,YAAA;AACJ;AAAI;EACF,YAAA;EACA,aAAA;AAEF;AAAC;EACC,kBAAA;EACA,eAAA;EACA,WAAA;EACA,SAAA;EACA,sBAAA;EACA,YAAA;EACA,eAAA;EACA,aAAA;EACA,sBAAA;EACA,SAAA;EACA,kBAAA;AAEF;AADE;EACC,WAAA;EACA,aAAA;EACA,+BAAA;EACA,aAAA;AAGH;AAFG;EACC,WAAA;EACA,aAAA;EACA,uBAAA;EACA,cAAA;EACA,+BAAA;AAIJ;AAHI;EACC,oBAAA;AAKL;AAFG;EACC,WAAA;EACA,UAAA;EACA,YAAA;EACA,6BAAA;EACA,eAAA;AAIJ;AADE;EACC,eAAA;EACA,aAAA;EACA,SAAA;AAGH;AAFG;EACC,eAAA;EACA,yBAAA;EACA,YAAA;EACA,iBAAA;EACA,YAAA;EACA,eAAA;AAIJ;AAFG;EACC,aAAA;EACA,QAAA;AAIJ;AAHI;EACC,eAAA;AAKL","sourcesContent":["* {\r\n    box-sizing: border-box;\r\n    align-items: center;\r\n}\r\n\r\nbody {\r\n    position: relative;\r\n    padding: 0;\r\n    margin: 0;\r\n    width: 100vw;\r\n    min-height: 100vh;\r\n    font-family: \"Roboto\", sans-serif;\r\n    color: white;\r\n    #scene {\r\n\t\twidth: 100vw;\r\n\t\theight: 100vh;\r\n\t}\r\n\t#controls {\r\n\t\tborder-radius: 5px;\r\n\t\tposition: fixed;\r\n\t\tbottom: 1em;\r\n\t\tleft: 1em;\r\n\t\tbackground-color: #222;\r\n\t\tpadding: 1em;\r\n\t\tmin-width: 30vw;\r\n\t\tdisplay: flex;\r\n\t\tflex-direction: column;\r\n\t\tgap: 10px;\r\n\t\talign-items: start;\r\n\t\t> .input {\r\n\t\t\twidth: 100%;\r\n\t\t\tdisplay: grid;\r\n\t\t\tgrid-template-columns: 50px 1fr;\r\n\t\t\tgrid-gap: 5px;\r\n\t\t\t> label {\r\n\t\t\t\twidth: 100%;\r\n\t\t\t\tdisplay: grid;\r\n\t\t\t\tjustify-content: center;\r\n\t\t\t\tgrid-gap: 10px;\r\n\t\t\t\tgrid-template-columns: 20px 1fr;\r\n\t\t\t\ti {\r\n\t\t\t\t\tjustify-self: center;\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t\tinput {\r\n\t\t\t\twidth: 100%;\r\n\t\t\t\tpadding: 0;\r\n\t\t\t\tborder: none;\r\n\t\t\t\tbackground-color: transparent;\r\n\t\t\t\tcursor: pointer;\r\n\t\t\t}\r\n\t\t}\r\n\t\t> footer {\r\n\t\t\tmargin-top: 1em;\r\n\t\t\tdisplay: flex;\r\n\t\t\tgap: 10px;\r\n\t\t\t> button {\r\n\t\t\t\tpadding: .75em;\r\n\t\t\t\tbackground-color: #306ffc;\r\n\t\t\t\tcolor: white;\r\n\t\t\t\tfont-weight: bold;\r\n\t\t\t\tborder: none;\r\n\t\t\t\tcursor: pointer;\r\n\t\t\t}\r\n\t\t\t.input {\r\n\t\t\t\tdisplay: flex;\r\n\t\t\t\tgap: 5px;\r\n\t\t\t\tlabel {\r\n\t\t\t\t\tcursor: pointer;\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n  box-sizing: border-box;\n  align-items: center;\n}\n\nbody {\n  position: relative;\n  padding: 0;\n  margin: 0;\n  width: 100vw;\n  min-height: 100vh;\n  font-family: \"Roboto\", sans-serif;\n  color: white;\n}\nbody > header {\n  position: fixed;\n  top: 0;\n  left: 0;\n  padding: 0.5em;\n  display: flex;\n  gap: 15px;\n}\nbody > header > h1 {\n  margin: 0;\n}\nbody > header > .links {\n  display: flex;\n  gap: 10px;\n}\nbody > header > .links a {\n  color: white;\n  font-size: 20px;\n}\nbody #scene {\n  width: 100vw;\n  height: 100vh;\n}\nbody #graph-image {\n  aspect-ratio: 1/1;\n  width: 15vw;\n  background-color: black;\n  border: 1px solid #306ffc;\n  align-self: center;\n  position: fixed;\n  bottom: 1em;\n  right: 1em;\n}\nbody #raycaster {\n  position: fixed;\n  transform: translate(-50%, 50%);\n  padding: 1em;\n  background-color: black;\n  border: 1px solid #306ffc;\n}\nbody #controls {\n  border-radius: 5px;\n  position: fixed;\n  bottom: 1em;\n  left: 1em;\n  background-color: rgba(34, 34, 34, 0.8);\n  padding: 1em;\n  min-width: 30vw;\n  display: flex;\n  flex-direction: column;\n  gap: 10px;\n  align-items: start;\n}\nbody #controls > .input {\n  width: 100%;\n  display: grid;\n  grid-template-columns: 50px 1fr;\n  grid-gap: 5px;\n}\nbody #controls > .input > label {\n  width: 100%;\n  display: grid;\n  justify-content: center;\n  grid-gap: 10px;\n  grid-template-columns: 20px 1fr;\n}\nbody #controls > .input > label i {\n  justify-self: center;\n}\nbody #controls > .input input {\n  width: 100%;\n  padding: 0;\n  border: none;\n  background-color: transparent;\n  cursor: pointer;\n}\nbody #controls > footer {\n  margin-top: 1em;\n  display: flex;\n  gap: 10px;\n}\nbody #controls > footer > button {\n  padding: 0.75em;\n  background-color: #306ffc;\n  color: white;\n  font-weight: bold;\n  border: none;\n  cursor: pointer;\n}\nbody #controls > footer .input {\n  display: flex;\n  gap: 5px;\n}\nbody #controls > footer .input label {\n  cursor: pointer;\n}", "",{"version":3,"sources":["webpack://./src/style/style.scss"],"names":[],"mappings":"AAAA;EACC,sBAAA;EACA,mBAAA;AACD;;AAIA;EACC,kBAAA;EACA,UAAA;EACA,SAAA;EACA,YAAA;EACA,iBAAA;EACA,iCAAA;EACA,YAAA;AADD;AAEC;EACC,eAAA;EACA,MAAA;EACA,OAAA;EACA,cAAA;EACA,aAAA;EACA,SAAA;AAAF;AACE;EACC,SAAA;AACH;AACE;EACC,aAAA;EACA,SAAA;AACH;AAAG;EACC,YAAA;EACA,eAAA;AAEJ;AAEC;EACC,YAAA;EACA,aAAA;AAAF;AAEC;EACC,iBAAA;EACA,WAAA;EACA,uBAAA;EACA,yBAAA;EACA,kBAAA;EACA,eAAA;EACA,WAAA;EACA,UAAA;AAAF;AAEC;EACC,eAAA;EACA,+BAAA;EACA,YAAA;EACA,uBAAA;EACA,yBAAA;AAAF;AAEC;EACC,kBAAA;EACA,eAAA;EACA,WAAA;EACA,SAAA;EACA,uCAAA;EACA,YAAA;EACA,eAAA;EACA,aAAA;EACA,sBAAA;EACA,SAAA;EACA,kBAAA;AAAF;AACE;EACC,WAAA;EACA,aAAA;EACA,+BAAA;EACA,aAAA;AACH;AAAG;EACC,WAAA;EACA,aAAA;EACA,uBAAA;EACA,cAAA;EACA,+BAAA;AAEJ;AADI;EACC,oBAAA;AAGL;AAAG;EACC,WAAA;EACA,UAAA;EACA,YAAA;EACA,6BAAA;EACA,eAAA;AAEJ;AACE;EACC,eAAA;EACA,aAAA;EACA,SAAA;AACH;AAAG;EACC,eAAA;EACA,yBA3FK;EA4FL,YAAA;EACA,iBAAA;EACA,YAAA;EACA,eAAA;AAEJ;AAAG;EACC,aAAA;EACA,QAAA;AAEJ;AADI;EACC,eAAA;AAGL","sourcesContent":["* {\n\tbox-sizing: border-box;\n\talign-items: center;\n}\n\n$color1: #306ffc;\n\nbody {\n\tposition: relative;\n\tpadding: 0;\n\tmargin: 0;\n\twidth: 100vw;\n\tmin-height: 100vh;\n\tfont-family: \"Roboto\", sans-serif;\n\tcolor: white;\n\t> header {\n\t\tposition: fixed;\n\t\ttop: 0;\n\t\tleft: 0;\n\t\tpadding: 0.5em;\n\t\tdisplay: flex;\n\t\tgap: 15px;\n\t\t> h1 {\n\t\t\tmargin: 0;\n\t\t}\n\t\t> .links {\n\t\t\tdisplay: flex;\n\t\t\tgap: 10px;\n\t\t\ta {\n\t\t\t\tcolor: white;\n\t\t\t\tfont-size: 20px;\n\t\t\t}\n\t\t}\n\t}\n\t#scene {\n\t\twidth: 100vw;\n\t\theight: 100vh;\n\t}\n\t#graph-image {\n\t\taspect-ratio: 1 / 1;\n\t\twidth: 15vw;\n\t\tbackground-color: black;\n\t\tborder: 1px solid $color1;\n\t\talign-self: center;\n\t\tposition: fixed;\n\t\tbottom: 1em;\n\t\tright: 1em;\n\t}\n\t#raycaster {\n\t\tposition: fixed;\n\t\ttransform: translate(-50%, 50%);\n\t\tpadding: 1em;\n\t\tbackground-color: black;\n\t\tborder: 1px solid $color1;\n\t}\n\t#controls {\n\t\tborder-radius: 5px;\n\t\tposition: fixed;\n\t\tbottom: 1em;\n\t\tleft: 1em;\n\t\tbackground-color: rgba(#222, .8);\n\t\tpadding: 1em;\n\t\tmin-width: 30vw;\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\tgap: 10px;\n\t\talign-items: start;\n\t\t> .input {\n\t\t\twidth: 100%;\n\t\t\tdisplay: grid;\n\t\t\tgrid-template-columns: 50px 1fr;\n\t\t\tgrid-gap: 5px;\n\t\t\t> label {\n\t\t\t\twidth: 100%;\n\t\t\t\tdisplay: grid;\n\t\t\t\tjustify-content: center;\n\t\t\t\tgrid-gap: 10px;\n\t\t\t\tgrid-template-columns: 20px 1fr;\n\t\t\t\ti {\n\t\t\t\t\tjustify-self: center;\n\t\t\t\t}\n\t\t\t}\n\t\t\tinput {\n\t\t\t\twidth: 100%;\n\t\t\t\tpadding: 0;\n\t\t\t\tborder: none;\n\t\t\t\tbackground-color: transparent;\n\t\t\t\tcursor: pointer;\n\t\t\t}\n\t\t}\n\t\t> footer {\n\t\t\tmargin-top: 1em;\n\t\t\tdisplay: flex;\n\t\t\tgap: 10px;\n\t\t\t> button {\n\t\t\t\tpadding: .75em;\n\t\t\t\tbackground-color: $color1;\n\t\t\t\tcolor: white;\n\t\t\t\tfont-weight: bold;\n\t\t\t\tborder: none;\n\t\t\t\tcursor: pointer;\n\t\t\t}\n\t\t\t.input {\n\t\t\t\tdisplay: flex;\n\t\t\t\tgap: 5px;\n\t\t\t\tlabel {\n\t\t\t\t\tcursor: pointer;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -60206,16 +60206,31 @@ __webpack_require__.r(__webpack_exports__);
 const p2d = n => n * (((Math.PI / 2) / 9) / 10);
 const d2p = n => n / (((Math.PI / 2) / 9) / 10);
 const wait = time => new Promise(resolve => setTimeout(resolve, time));
+const boxSize = mesh => new three__WEBPACK_IMPORTED_MODULE_2__.Box3().setFromObject(mesh).getSize(new three__WEBPACK_IMPORTED_MODULE_2__.Vector3());
+const hex2rgba = hexa => {
+	let r = parseInt(hexa.slice(1,3), 16);
+	let g = parseInt(hexa.slice(3,5), 16);
+	let b = parseInt(hexa.slice(5,7), 16);
+	let a = parseInt(hexa.slice(7,9), 16)/255;
+	return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
 
 const sceneParameters = {
 	container: document.querySelector("#scene"),
+	// imageContainer: document.querySelector("#graph-image"),
+	// get imageContext() {
+	// 	return this.imageContainer.getContext("2d");
+	// },
 	get width() {
-		return this.container.offsetWidth
+		return this.container.offsetWidth;
 	},
 	get height() {
-		return this.container.offsetHeight
+		return this.container.offsetHeight;
 	}
 };
+
+// sceneParameters.imageContainer.width = sceneParameters.imageContainer.innerWidth;
+// sceneParameters.imageContainer.height = sceneParameters.imageContainer.innerHeight;
 
 const ENTIRE_SCENE = 0
 const BLOOM_SCENE = 1;
@@ -60281,95 +60296,284 @@ const setSize = () => {
 setSize();
 window.onresize = setSize;
 
-// (async () => {
-
-// 	const light = new THREE.AmbientLight( 0x404040 ); // soft white light
-// 	scene.add( light );
-
-// 	const geometry = new THREE.BoxGeometry(2, 2, 2);
-// 	const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-// 	const cube = new THREE.Mesh(geometry, material);
-// 	cube.position.set(0, 2, 0);
-// 	// scene.add(cube);
-
-// })();
-
 camera.position.set(0, 50, -110);
 const intersectsGroup = new three__WEBPACK_IMPORTED_MODULE_2__.Group();
+scene.add(intersectsGroup);
 
 const area = new three__WEBPACK_IMPORTED_MODULE_2__.Vector2(100, 100);
+
+// (() => {
+// 	const geometry = new THREE.PlaneGeometry(area.x, area.y);
+// 	const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+// 	const plane = new THREE.Mesh(geometry, material);
+// 	plane.rotation.x = p2d(90);
+// 	scene.add(plane);
+// })();
+
 let autoRefresh = true;
-let lineColor = "#555555";
+let lineColor = "#ff0000";
 let [width, height] = [20, 20];
-let coeff = 6;
+let coeff = 5;
 
-const setGraph = () => {
+const transition = .8;
+
+let pointsArray = new Array();
+let [prevWidth, prevHeight] = [width, height];
+const setGraphs = async () => {
+
+	const updatePositions = geo => geo.attributes.position.needsUpdate = true;
+	const findY = (x, z) => {
+		for(let i = 0; i < pointsArray.length; i++) {
+			for(let j = 0; j < pointsArray[i].length; j++) {
+				if(pointsArray[i][j].x === x && pointsArray[i][j].z === z) return pointsArray[i][j].y;
+			};
+		};
+		return 0;
+	};
+
+	const getDivisions = (i, j) => {
+		return {
+			x: Math.floor(-(area.x / 2) + (area.x / (width)) * i),
+			z: Math.floor(-(area.y / 2) + (area.y / (height)) * j)
+		}
+	};
+
+	const findClosest = (axe, value) => {
+		const r = array => array.map(p => p[axe]);
+		const positions = new Array(width)
+			.fill()
+			.map((e, i) => new Array(height)
+				.fill()
+				.map((f, j) => getDivisions(i, j)))
+			.reduce((current, accumulator) => {
+				if(typeof current[0] !== "number") current = r(current);
+				current = [...current, ...r(accumulator)];
+				return current;
+			});
+
+		let distanceMin = Infinity;
+		let indexMin = 0;
+		for(let i = 0; i < positions.length; i++) {
+			const distance = Math.abs(positions[i] - value);
+			if(distance < distanceMin) {
+				distanceMin = distance;
+				indexMin = i;
+			}
+		}
+		return positions[indexMin];
+	};
+
+	await new Promise(r => {
+		Promise.all(intersectsGroup.children.map(child => new Promise(resolve => {
+			switch(child.type) {
+				case "Mesh":
+					const position = {...child.position};
+					gsap__WEBPACK_IMPORTED_MODULE_9__["default"].to(position, {
+						x: child.position.x,
+						y: 0,
+						z: child.position.z,
+						duration: (transition / 2),
+						onUpdate: () => child.position.setY(position.y),
+						onComplete: () => resolve()
+					});
+					break;
+				case "Line":
+					const endArray = child.geometry.attributes.position.array.map((position, i) => (i % 3) === 1 ? 0 : position);
+
+					gsap__WEBPACK_IMPORTED_MODULE_9__["default"].to(child.geometry.attributes.position.array, {
+						duration: (transition / 2),
+						onUpdate: () => updatePositions(child.geometry),
+						endArray,
+						onComplete: () => resolve()
+					});
+					break;
+				default:
+					resolve();
+					break;
+			};
+		}))).then(r);
+	});
+
+	if(prevWidth !== width || prevHeight !== height) {
+		await new Promise(r => {
+			Promise.all(intersectsGroup.children.map(child => new Promise(r2 => {
+				switch(child.type) {
+					case "Mesh":
+						const position = {...child.position};
+						gsap__WEBPACK_IMPORTED_MODULE_9__["default"].to(position, {
+							x: findClosest("x", child.position.x),
+							y: child.position.y,
+							z: findClosest("z", child.position.z),
+							duration: (transition / 2),
+							onUpdate: () => {
+								child.position.setX(position.x);
+								child.position.setZ(position.z);
+							},
+							onComplete: () => r2()
+						});
+						break;
+					case "Line":
+						const endArray = child.geometry.attributes.position.array.map((position, i) => {
+							switch(i % 3) {
+								case 0:
+									return findClosest("x", position)
+									break;
+								case 2:
+									return findClosest("z", position)
+									break;
+								default:
+									return position;
+									break;
+							};
+						});
+
+						gsap__WEBPACK_IMPORTED_MODULE_9__["default"].to(child.geometry.attributes.position.array, {
+							duration: (transition / 2),
+							onUpdate: () => updatePositions(child.geometry),
+							endArray,
+							onComplete: () => r2()
+						});
+						break;
+					default:
+						r2();
+						break;
+				};
+			}))).then(r);
+		});
+	};
+
 	intersectsGroup.remove(...intersectsGroup.children);
-	let points = new Array();
-	(0,_perlin_js__WEBPACK_IMPORTED_MODULE_1__["default"])(width, height).forEach((section, i) => {
-		const sectionPoints = new Array();
-		const divX = (-(area.x / 2) + (area.x / (width)) * i);
+	// sceneParameters.imageContext.clearRect(0, 0, sceneParameters.imageContainer.offsetWidth, sceneParameters.imageContainer.offsetHeight);
+	pointsArray = new Array();
+
+	(0,_perlin_js__WEBPACK_IMPORTED_MODULE_1__["default"])(width, height).forEach((section, i) => {		
+
+		const points = new Array();
+		
 		section.forEach((value, j) => {
-			const divZ = (-(area.y / 2) + (area.y / (height)) * j);
-			sectionPoints.push(new three__WEBPACK_IMPORTED_MODULE_2__.Vector3(divX, (value * coeff), divZ));
+			// // 2d graph
+			// sceneParameters.imageContext.fillStyle = (j % 2) === 0 ? hex2rgba(lineColor + Math.floor(value * 100)) : "red";
+			// sceneParameters.imageContext.fillRect(
+			// 	((sceneParameters.imageContainer.offsetWidth / width) * i),
+			// 	((sceneParameters.imageContainer.offsetHeight / height) * j),
+			// 	sceneParameters.imageContainer.offsetWidth / width,
+			// 	sceneParameters.imageContainer.offsetHeight / height
+			// );
+
+			// 3d graph
+			const divisions = getDivisions(i, j);
+			points.push(new three__WEBPACK_IMPORTED_MODULE_2__.Vector3(divisions.x, (value * coeff), divisions.z));
 		});
-
-		const geometry = new three__WEBPACK_IMPORTED_MODULE_2__.BufferGeometry().setFromPoints(sectionPoints);
-
+		
+		const geometry = new three__WEBPACK_IMPORTED_MODULE_2__.BufferGeometry().setFromPoints(points.map(p => {
+			return {
+				...p,
+				y: 0
+			}
+		}));
 		const material = new three__WEBPACK_IMPORTED_MODULE_2__.LineBasicMaterial({ color: new three__WEBPACK_IMPORTED_MODULE_2__.Color(lineColor) });
 		const line = new three__WEBPACK_IMPORTED_MODULE_2__.Line(geometry, material);
 		intersectsGroup.add(line);
-		points.push(sectionPoints);
+		pointsArray.push(points);
 
-		const positions = geometry.attributes.position.array;
-
-		const updatePositions = () => {
-			geometry.attributes.position.needsUpdate = true;
-		}
-
-		gsap__WEBPACK_IMPORTED_MODULE_9__["default"].to(positions, {
-			duration: .6, // durée de l'animation
-			delay: 0, // délai avant le début de l'animation
-			repeat: 1, // nombre de fois que l'animation doit se répéter (-1 pour une répétition infinie)
-			yoyo: true, // l'animation doit-elle être en mode yoyo ?
-			onUpdate: updatePositions, // fonction de mise à jour des positions des points à chaque image de l'animation
-			// startArray: positions.map(() => 0),
-			endArray: new three__WEBPACK_IMPORTED_MODULE_2__.BufferGeometry().setFromPoints(sectionPoints.map(vector => new three__WEBPACK_IMPORTED_MODULE_2__.Vector3(vector.x, 0, vector.z))).attributes.position.array,
+		points.forEach(position => {
+			const geometry = new three__WEBPACK_IMPORTED_MODULE_2__.SphereGeometry(.5, 32, 16);
+			const material = new three__WEBPACK_IMPORTED_MODULE_2__.MeshBasicMaterial( { color: new three__WEBPACK_IMPORTED_MODULE_2__.Color(lineColor) } );
+			const sphere = new three__WEBPACK_IMPORTED_MODULE_2__.Mesh(geometry, material);
+			sphere.position.copy({...position, y: 0});
+			intersectsGroup.add(sphere);
 		});
 
 	});
-	const crossPoints = new Array();
-	for(let i = 0; i < height; i++) {
+
+	new Array(height).fill().map((e, i) => {
 		const array = new Array();
-		for(let j = 0; j < points.length; j++) array.push(points[j][i]);
-		crossPoints.push(array);
-	}
-	crossPoints.forEach(sectionPoints => {
-		const geometry = new three__WEBPACK_IMPORTED_MODULE_2__.BufferGeometry().setFromPoints(sectionPoints);
+		for(let j = 0; j < pointsArray.length; j++) array.push(pointsArray[j][i]);
+		return array;
+	}).forEach(section => {
+		const geometry = new three__WEBPACK_IMPORTED_MODULE_2__.BufferGeometry().setFromPoints(section.map(p => {
+			return {
+				...p,
+				y: 0
+			}
+		}));
 		const material = new three__WEBPACK_IMPORTED_MODULE_2__.LineBasicMaterial({ color: new three__WEBPACK_IMPORTED_MODULE_2__.Color(lineColor) });
 		const line = new three__WEBPACK_IMPORTED_MODULE_2__.Line(geometry, material);
 		intersectsGroup.add(line);
-
-		const positions = geometry.attributes.position.array;
-
-		const updatePositions = () => {
-			geometry.attributes.position.needsUpdate = true;
-		}
-
-		gsap__WEBPACK_IMPORTED_MODULE_9__["default"].to(positions, {
-			duration: .6, // durée de l'animation
-			delay: 0, // délai avant le début de l'animation
-			repeat: 1, // nombre de fois que l'animation doit se répéter (-1 pour une répétition infinie)
-			yoyo: true, // l'animation doit-elle être en mode yoyo ?
-			onUpdate: updatePositions, // fonction de mise à jour des positions des points à chaque image de l'animation
-			// startArray: positions.map(() => 0),
-			endArray: new three__WEBPACK_IMPORTED_MODULE_2__.BufferGeometry().setFromPoints(sectionPoints.map(vector => new three__WEBPACK_IMPORTED_MODULE_2__.Vector3(vector.x, 0, vector.z))).attributes.position.array,
-		});
 	});
-	scene.add(intersectsGroup);
+
+	if(prevWidth !== width || prevHeight !== height) {
+		await wait(100);
+		await new Promise((resolve, reject) => {
+			const position = {...intersectsGroup.position};
+			gsap__WEBPACK_IMPORTED_MODULE_9__["default"].to(position, {
+				x: (area.x - boxSize(intersectsGroup).x) / 2,
+				y: intersectsGroup.position.y,
+				z: (area.y - boxSize(intersectsGroup).z) / 2,
+				duration: (transition / 2),
+				onUpdate: () => {
+					intersectsGroup.position.setX(position.x);
+					intersectsGroup.position.setZ(position.z);
+				},
+				onComplete: () => resolve()
+			});
+		});
+
+	};
+
+	await wait(100);
+
+	await new Promise(r => {
+		Promise.all(intersectsGroup.children.map(child => new Promise(resolve => {
+			switch(child.type) {
+				case "Mesh":
+					const position = {...child.position, y: 0};
+					gsap__WEBPACK_IMPORTED_MODULE_9__["default"].to(position, {
+						x: child.position.x,
+						y: findY(child.position.x, child.position.z),
+						z: child.position.z,
+						duration: (transition / 2),
+						onUpdate: () => child.position.setY(position.y),
+						onComplete: () => resolve()
+					});
+					break;
+				case "Line":
+
+					const positionArray = [...child.geometry.attributes.position.array];
+					const endArray = positionArray.map((value, i) => {
+						if((i % 3) === 1) {
+							return findY(positionArray[i - 1], positionArray[i + 1]);
+						}
+						return value;
+					});
+
+					gsap__WEBPACK_IMPORTED_MODULE_9__["default"].to(child.geometry.attributes.position.array, {
+						duration: (transition / 2),
+						onUpdate: () => updatePositions(child.geometry),
+						endArray: endArray,
+					});
+					resolve();
+					break;
+				default:
+					resolve();
+					break;
+			};
+		}))).then(r);
+	});
+
+	[prevWidth, prevHeight] = [width, height];
 };
 
-setGraph();
+setGraphs(true);
+
+// (async () => {
+// 	width = 10;
+// 	await setGraphs();
+// 	width = 5;
+// 	await setGraphs();
+// 	// width = 30;
+// 	// await setGraphs();
+// })();
 
 const refreshValues = () => $("#controls span.value").each(function() {
 	$(this).text($(this).parent().parent().find("input").val());
@@ -60397,12 +60601,12 @@ $("#controls input").each(function() {
 
 refreshValues();
 
-$("#controls-width").change(function(event) {
+$("body").on("change mousemove", "#controls-width",function(event) {
 	width = parseInt($(this).val());
 	refreshValues();
 });
 
-$("#controls-height").change(function(event) {
+$("body").on("change mousemove", "#controls-height",function(event) {
 	height = parseInt($(this).val());
 	refreshValues();
 });
@@ -60411,7 +60615,7 @@ $("#controls-color").change(function(event) {
 	lineColor = new three__WEBPACK_IMPORTED_MODULE_2__.Color($(this).val());
 });
 
-$("#controls-coeff").change(function(event) {
+$("body").on("change mousemove", "#controls-coeff",function(event) {
 	coeff = parseInt($(this).val());
 	refreshValues();
 });
@@ -60422,16 +60626,16 @@ $("#controls-auto_refresh").change(function(event) {
 
 $("#controls input").change(function(event) {
 	$(`${$(this).attr("id")}-value`).text($(this).val());
-	if(autoRefresh) setGraph();
+	if(autoRefresh) setGraphs();
 });
 
-$("#controls-refresh").click(setGraph);
+$("#controls-refresh").click(setGraphs);
 
 //dev----------------
 const controls = new three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_10__.OrbitControls(camera, renderer.domElement);
-controls.enablePan = false;
+// controls.enablePan = false;
 controls.enableZoom = false;
-controls.autoRotateSpeed = 0.25;
+controls.autoRotateSpeed = 0.3;
 controls.autoRotate = true;
 //-------------------
 
@@ -60443,15 +60647,19 @@ const raycaster = new three__WEBPACK_IMPORTED_MODULE_2__.Raycaster();
 const pointer = new three__WEBPACK_IMPORTED_MODULE_2__.Vector2();
 
 window.addEventListener("mousemove", event => {
-	// if(raycasterTarget) sceneParameters.container.style.cursor = "pointer";
-	// else sceneParameters.container.style.cursor = "auto";
 	pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
 	pointer.y = - (event.clientY / window.innerHeight) * 2 + 1;
-});
-
-window.addEventListener("click", event => {
-	if(!raycasterTarget) return;
-	console.log(raycasterTarget.position.y / 10);
+	$("#raycaster").css({
+		top: event.clientY + "px",
+		left: event.clientX + "px"
+	});
+	if(raycasterTarget) {
+		$("#raycaster").show().text(raycasterTarget.position.y);
+		controls.autoRotate = false;
+	} else {
+		$("#raycaster").hide();
+		controls.autoRotate = true;
+	}
 });
 
 (function animate() {
@@ -60476,9 +60684,7 @@ window.addEventListener("click", event => {
 	const intersects = raycaster.intersectObjects(intersectsGroup.children);
 	if(intersects.length > 0) {
 		const target = intersects[0].object;
-		// const target = intersects[0].object.name;
-		// console.log(target)
-		if(target) raycasterTarget = target;
+		if(target && target.type === "Mesh") raycasterTarget = target;
 		else raycasterTarget = null;
 	}
 

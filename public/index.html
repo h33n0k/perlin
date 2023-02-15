@@ -11,21 +11,31 @@
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<header>
+			<h1>Bruit de Perlin</h1>
+			<div class="links">
+				<!-- <a href="https://github.com/valentingorr/perlin.git" target="_blank">
+					<i class="fa-brands fa-github"></i>
+				</a> -->
+			</div>
+		</header>
+		<div id="raycaster"></div>
 		<div id="scene"></div>
+		<!-- <canvas id="graph-image"></canvas> -->
 		<div id="controls">
 			<div class="input range">
 				<label for="controls-width">
 					<i class="fa-sharp fa-solid fa-arrows-left-right"></i>
 					<span id="controls-width-value" class="value"></span>
 				</label>
-				<input target="width" id="controls-width" type="range">
+				<input step="1" target="width" id="controls-width" type="range">
 			</div>
 			<div class="input range">
 				<label for="controls-height">
 					<i class="fa-sharp fa-solid fa-arrows-up-down"></i>
 					<span id="controls-height-value" class="value"></span>
 				</label>
-				<input target="height" id="controls-height" type="range">
+				<input step="1" target="height" id="controls-height" type="range">
 			</div>
 			<div class="input range">
 				<label for="controls-coeff">
@@ -52,7 +62,7 @@
 			</footer>
 		</div>
 		<script src="https://kit.fontawesome.com/c2ff5c5615.js" crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 		<script defer type="text/javascript" src="./app.bundle.js"></script>
 	</body>
 </html>
