@@ -1,6 +1,6 @@
 # Perlin Noise
 
-[perlin noise 3d representation](https://i.imgur.com/bOLrsSL.png)
+![perlin noise 3d representation](https://i.imgur.com/bOLrsSL.png)
 
 ## Origin and use of Perlin noise
 Perlin noise is a noise generation technique developed by Ken Perlin in 1983. It helps generate consistent and realistic noise patterns, often used in computer graphics, 3D animation, video games, terrain simulation and many other fields. .
