@@ -188,15 +188,17 @@ const setGraphs = async () => {
 		Promise.all(intersectsGroup.children.map(child => new Promise(resolve => {
 			switch(child.type) {
 				case "Mesh":
-					const position = {...child.position};
-					gsap.to(position, {
-						x: child.position.x,
-						y: 0,
-						z: child.position.z,
-						duration: (transition / 2),
-						onUpdate: () => child.position.setY(position.y),
-						onComplete: () => resolve()
-					});
+					if(child.geometry instanceof THREE.SphereGeometry) {
+						const position = {...child.position};
+						gsap.to(position, {
+							x: child.position.x,
+							y: 0,
+							z: child.position.z,
+							duration: (transition / 2),
+							onUpdate: () => child.position.setY(position.y),
+							onComplete: () => resolve()
+						});
+					}
 					break;
 				case "Line":
 					const endArray = child.geometry.attributes.position.array.map((position, i) => (i % 3) === 1 ? 0 : position);
@@ -220,18 +222,20 @@ const setGraphs = async () => {
 			Promise.all(intersectsGroup.children.map(child => new Promise(r2 => {
 				switch(child.type) {
 					case "Mesh":
-						const position = {...child.position};
-						gsap.to(position, {
-							x: findClosest("x", child.position.x),
-							y: child.position.y,
-							z: findClosest("z", child.position.z),
-							duration: (transition / 2),
-							onUpdate: () => {
-								child.position.setX(position.x);
-								child.position.setZ(position.z);
-							},
-							onComplete: () => r2()
-						});
+						if(child.geometry instanceof THREE.SphereGeometry) {
+							const position = {...child.position};
+							gsap.to(position, {
+								x: findClosest("x", child.position.x),
+								y: child.position.y,
+								z: findClosest("z", child.position.z),
+								duration: (transition / 2),
+								onUpdate: () => {
+									child.position.setX(position.x);
+									child.position.setZ(position.z);
+								},
+								onComplete: () => r2()
+							});
+						}
 						break;
 					case "Line":
 						const endArray = child.geometry.attributes.position.array.map((position, i) => {
@@ -267,22 +271,20 @@ const setGraphs = async () => {
 	// sceneParameters.imageContext.clearRect(0, 0, sceneParameters.imageContainer.offsetWidth, sceneParameters.imageContainer.offsetHeight);
 	pointsArray = new Array();
 
-	perlin(width, height).forEach((section, i) => {		
-
-		const points = new Array();
-		
-		section.forEach((value, j) => {
+	perlin(width, height).forEach((section, x) => {
+		const points = new Array();		
+		section.forEach((value, y) => {
 			// // 2d graph
-			// sceneParameters.imageContext.fillStyle = (j % 2) === 0 ? hex2rgba(lineColor + Math.floor(value * 100)) : "red";
+			// sceneParameters.imageContext.fillStyle = (y % 2) === 0 ? hex2rgba(lineColor + Math.floor(value * 100)) : "red";
 			// sceneParameters.imageContext.fillRect(
 			// 	((sceneParameters.imageContainer.offsetWidth / width) * i),
-			// 	((sceneParameters.imageContainer.offsetHeight / height) * j),
+			// 	((sceneParameters.imageContainer.offsetHeight / height) * y),
 			// 	sceneParameters.imageContainer.offsetWidth / width,
 			// 	sceneParameters.imageContainer.offsetHeight / height
 			// );
 
 			// 3d graph
-			const divisions = getDivisions(i, j);
+			const divisions = getDivisions(x, y);
 			points.push(new THREE.Vector3(divisions.x, (value * coeff), divisions.z));
 		});
 		
@@ -297,9 +299,9 @@ const setGraphs = async () => {
 		intersectsGroup.add(line);
 		pointsArray.push(points);
 
-		points.forEach(position => {
-			const geometry = new THREE.SphereGeometry(.5, 32, 16);
-			const material = new THREE.MeshBasicMaterial( { color: new THREE.Color(lineColor) } );
+		points.forEach((position, y) => {
+			const geometry = new THREE.SphereGeometry(.35, 32, 16);
+			const material = new THREE.MeshBasicMaterial({ color: new THREE.Color(lineColor) });
 			const sphere = new THREE.Mesh(geometry, material);
 			sphere.position.copy({...position, y: 0});
 			intersectsGroup.add(sphere);
@@ -307,11 +309,56 @@ const setGraphs = async () => {
 
 	});
 
-	new Array(height).fill().map((e, i) => {
+	pointsArray.forEach((section, x) => {
+		return section.forEach((point, y) => {
+			if(x !== (width - 1) && y !== (height - 1)) {
+
+				const plane = new THREE.Mesh(
+					new THREE.PlaneGeometry(1, 1),
+					new THREE.MeshBasicMaterial({ color: new THREE.Color(lineColor), side: THREE.DoubleSide })
+				);
+
+				plane.geometry.attributes.position.array= new Float32Array(plane.geometry.attributes.position.array
+					.reduce((c, a) => {
+						if(!Array.isArray(c)) c = [[c]];
+						if(c[c.length - 1].length <= 2) c[c.length - 1].push(a);
+						else c.push([a]);
+						return c;
+					})
+					.map(array => new THREE.Vector3().fromArray(array))
+					.map((vector, i) => {
+						switch(i) {
+							case 0:
+								vector.copy(pointsArray[x + 1][y]);
+								break;
+							case 1:
+								vector.copy(section[y]);
+								break;
+							case 2:
+								vector.copy(pointsArray[x + 1][y + 1]);
+								break;
+							case 3:
+								vector.copy(pointsArray[x][y + 1]);
+								break;
+						}
+
+						vector.setY(0)
+
+						return vector.toArray();
+					})
+					.reduce((c, a) => [...c, ...a]));
+
+				intersectsGroup.add(plane);
+				// scene.add(new BoxHelper(plane, 0xffff00));
+			}
+		});
+	});
+
+	new Array(height).fill().map((e, y) => {
 		const array = new Array();
-		for(let j = 0; j < pointsArray.length; j++) array.push(pointsArray[j][i]);
+		for(let x = 0; x < pointsArray.length; x++) array.push(pointsArray[x][y]);
 		return array;
-	}).forEach(section => {
+	}).forEach((section, x) => {
 		const geometry = new THREE.BufferGeometry().setFromPoints(section.map(p => {
 			return {
 				...p,
@@ -342,21 +389,25 @@ const setGraphs = async () => {
 
 	};
 
-	await wait(100);
+	await wait(200);
 
 	await new Promise(r => {
 		Promise.all(intersectsGroup.children.map(child => new Promise(resolve => {
 			switch(child.type) {
 				case "Mesh":
-					const position = {...child.position, y: 0};
-					gsap.to(position, {
-						x: child.position.x,
-						y: findY(child.position.x, child.position.z),
-						z: child.position.z,
-						duration: (transition / 2),
-						onUpdate: () => child.position.setY(position.y),
-						onComplete: () => resolve()
-					});
+					if(child.geometry instanceof THREE.SphereGeometry) {
+						const position = {...child.position, y: 0};
+						gsap.to(position, {
+							x: child.position.x,
+							y: findY(child.position.x, child.position.z),
+							z: child.position.z,
+							duration: (transition / 2),
+							onUpdate: () => child.position.setY(position.y),
+							onComplete: () => resolve()
+						});
+					} else {
+
+					}
 					break;
 				case "Line":
 
@@ -454,10 +505,11 @@ $("#controls-refresh").click(setGraphs);
 
 //dev----------------
 const controls = new OrbitControls(camera, renderer.domElement);
-// controls.enablePan = false;
+controls.enablePan = false;
 controls.enableZoom = false;
 controls.autoRotateSpeed = 0.3;
 controls.autoRotate = true;
+// scene.add(new THREE.AxesHelper(100));
 //-------------------
 
 const darkMaterial = new THREE.MeshBasicMaterial({ color: "black" });
@@ -486,14 +538,14 @@ window.addEventListener("mousemove", event => {
 (function animate() {
 	requestAnimationFrame(animate);
 	scene.traverse(object => {
-		if (object.isMesh && bloomLayer.test( object.layers ) === false) {
+		if(object.isMesh && bloomLayer.test( object.layers ) === false) {
 			materials[ object.uuid ] = object.material;
 			object.material = darkMaterial;
 		}
 	});
 	bloomComposer.render();
 	scene.traverse(object => {
-		if ( materials[object.uuid] ) {
+		if(materials[object.uuid]) {
 			object.material = materials[object.uuid];
 			delete materials[object.uuid];
 		}
@@ -505,7 +557,7 @@ window.addEventListener("mousemove", event => {
 	const intersects = raycaster.intersectObjects(intersectsGroup.children);
 	if(intersects.length > 0) {
 		const target = intersects[0].object;
-		if(target && target.type === "Mesh") raycasterTarget = target;
+		if(target && target.type === "Mesh" && target.geometry instanceof THREE.SphereGeometry) raycasterTarget = target;
 		else raycasterTarget = null;
 	}
 
