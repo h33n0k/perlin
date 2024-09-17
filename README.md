@@ -22,7 +22,7 @@ Perlin noise is very useful in many graphics applications.
 
 2. Clone the repo
 ```bash
-git clone https://github.com/valentingorr/perlin.git
+git clone https://github.com/h33n0k/perlin.git
 ```
 
 3. Install Dependencies
